@@ -144,7 +144,7 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.BasicAuthentication",
     ),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
-    "PAGE_SIZE": 50,
+    "PAGE_SIZE": 40,
     "DEFAULT_FILTER_BACKENDS": ["rest_framework.filters.SearchFilter"],
 }
 
@@ -188,7 +188,6 @@ AWS_S3_USE_SSL = True
 """
 
 if os.getenv("MODE") != "development":
-    print(os.getenv("MODE"))
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True

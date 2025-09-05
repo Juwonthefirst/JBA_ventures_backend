@@ -7,6 +7,7 @@ def create_image_path(instance, filename):
 
 
 class Property(models.Model):
+    title = models.CharField(max_length = 100)
     main_image = models.ImageField(upload_to=create_image_path)
     address = models.CharField(max_length=200)
     state = models.CharField(max_length=20)
