@@ -14,3 +14,6 @@ class Property(models.Model):
     lga = models.CharField(max_length=50)
     description = models.CharField(max_length=300)
     type = models.CharField(max_length=50)
+
+class PropertyImages(models.Model):
+	property = models.ForeignKey(Property)
