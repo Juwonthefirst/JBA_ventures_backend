@@ -1,6 +1,7 @@
 django
 argon2-cffi
 django-cors-headers
+django_filters
 django-storages
 djangorestframework
 djangorestframework_simplejwt

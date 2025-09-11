@@ -41,10 +41,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.postgres",
     "rest_framework",
     "rest_framework_simplejwt.token_blacklist",
     "corsheaders",
+    "django_filters",
     "v1.property",
+    "v1.authentication",
 ]
 
 MIDDLEWARE = [
@@ -145,7 +148,10 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 40,
-    "DEFAULT_FILTER_BACKENDS": ["rest_framework.filters.SearchFilter"],
+    "DEFAULT_FILTER_BACKENDS": [
+        "rest_framework.filters.SearchFilter",
+        "django_filters.rest_framework.DjangoFilterBackend",
+    ],
 }
 
 PASSWORD_HASHERS = [
