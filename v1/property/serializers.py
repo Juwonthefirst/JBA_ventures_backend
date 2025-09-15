@@ -10,8 +10,7 @@ class PropertyMediaSerializer(serializers.ModelSerializer):
 
 
 class PropertySerializer(serializers.ModelSerializer):
-    extra_media_upload = serializers.ListField(child=serializers.FileField(), write_only=True)
-    extra_media = PropertyMediaSerializer(many=True, read_only=True)
+    extra_media = serializers.ListField(child=serializers.FileField())
     
     class Meta:
         model = PropertyModel

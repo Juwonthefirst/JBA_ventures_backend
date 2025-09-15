@@ -16,7 +16,7 @@ class Property(models.Model):
     address = models.CharField(max_length=200)
     state = models.CharField(max_length=20)
     lga = models.CharField(max_length=50)
-    description = models.CharField(max_length=300)
+    description = models.TextField()
     benefits = ArrayField(models.CharField(max_length=150), default=list)
     type = models.CharField(max_length=50)
     offer = models.CharField(max_length=50)
