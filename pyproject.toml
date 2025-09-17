@@ -18,3 +18,5 @@ dependencies = [
     "psycopg2>=2.9.10",
     "whitenoise>=6.10.0",
 ]
+[tool.uv.scripts]
+dev = ["pg_ctl -D","python manage.py runserver"]
