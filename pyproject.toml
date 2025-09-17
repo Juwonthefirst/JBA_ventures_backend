@@ -19,4 +19,4 @@ dependencies = [
     "whitenoise>=6.10.0",
 ]
 [tool.uv.scripts]
-dev = ["pg_ctl -D","python manage.py runserver"]
+dev = ["pg_ctl -D 'C:\Program Files\PostgreSQL\17\data' start","python manage.py runserver"]
