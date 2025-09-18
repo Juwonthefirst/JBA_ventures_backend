@@ -20,8 +20,6 @@ dependencies = [
     "whitenoise>=6.10.0",
 ]
 
-[project.scripts]
-dev = "scripts:dev"
 
 [dependency-groups]
 dev = []

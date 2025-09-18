@@ -134,8 +134,8 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# MEDIA_URL = "media/"
-# MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -168,9 +168,7 @@ SIMPLE_JWT = {
     "BLACKLIST_AFTER_ROTATION": True,
 }
 
-CORS_ALLOWED_ORIGINS = [
-    "http://0.0.0.0:5173"
-]
+CORS_ALLOWED_ORIGINS = ["http://0.0.0.0:5173"]
 CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_CREDENTIALS = True
@@ -179,23 +177,27 @@ CSRF_TRUSTED_ORIGINS = [
     "http://0.0.0.0:5173",
 ]
 
-# Storage
-STORAGES = {
-    "default": {"BACKEND": "storages.backends.s3boto3.S3Boto3Storage"},
-    "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
-}
-AWS_ACCESS_KEY_ID = os.getenv("STORAGE_ACCESS_KEY")
-AWS_SECRET_ACCESS_KEY = os.getenv("STORAGE_SECRET_KEY")
-AWS_STORAGE_BUCKET_NAME = os.getenv("STORAGE_BUCKET_NAME")
-AWS_S3_ENDPOINT_URL = os.getenv("STORAGE_REGION_ENDPOINT")
-AWS_S3_FILE_OVERWRITE = True
-AWS_S3_REGION_NAME = "auto"
-AWS_DEFAULT_ACL = None
-AWS_S3_VERIFY = True
-AWS_S3_USE_SSL = True
-
 
 if os.getenv("MODE") != "development":
+    # Storage
+    MEDIA_URL = None
+    MEDIA_ROOT = None
+    STORAGES = {
+        "default": {"BACKEND": "storages.backends.s3boto3.S3Boto3Storage"},
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"
+        },
+    }
+    AWS_ACCESS_KEY_ID = os.getenv("STORAGE_ACCESS_KEY")
+    AWS_SECRET_ACCESS_KEY = os.getenv("STORAGE_SECRET_KEY")
+    AWS_STORAGE_BUCKET_NAME = os.getenv("STORAGE_BUCKET_NAME")
+    AWS_S3_ENDPOINT_URL = os.getenv("STORAGE_REGION_ENDPOINT")
+    AWS_S3_FILE_OVERWRITE = True
+    AWS_S3_REGION_NAME = "auto"
+    AWS_DEFAULT_ACL = None
+    AWS_S3_VERIFY = True
+    AWS_S3_USE_SSL = True
+
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
