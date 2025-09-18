@@ -1,7 +1,7 @@
 [project]
 name = "jba-ventures-backend"
 version = "0.1.0"
-description = "an api"
+description = "an api for storing real estate data"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
@@ -14,9 +14,14 @@ dependencies = [
     "django-storages>=1.14.6",
     "djangorestframework>=3.16.1",
     "djangorestframework-simplejwt>=5.5.1",
+    "dotenv>=0.9.9",
     "pillow>=11.3.0",
     "psycopg2>=2.9.10",
     "whitenoise>=6.10.0",
 ]
-[tool.uv.scripts]
-dev = ["pg_ctl -D 'C:\Program Files\PostgreSQL\17\data' start","python manage.py runserver"]
+
+[project.scripts]
+dev = "scripts:dev"
+
+[dependency-groups]
+dev = []
