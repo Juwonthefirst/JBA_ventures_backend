@@ -4,7 +4,7 @@ import subprocess, sys
 
 def run_development_server():
     subprocess.run(["pg_ctl", "-D", "C:\\Program Files\\PostgreSQL\\17\\data", "start"])
-    subprocess.run(["uv", "run", "manage.py", "runserver"])
+    subprocess.run(["uv", "run", "manage.py", "runserver", "0.0.0.0:8000"])
 
 
 def make_migrations_and_migrate():
