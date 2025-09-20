@@ -1,3 +1,4 @@
+from os import read
 from rest_framework import serializers
 from v1.property.models import Property as PropertyModel, PropertyMedia
 
@@ -32,7 +33,7 @@ class PropertySerializer(serializers.ModelSerializer):
     extra_media_upload = serializers.ListField(
         child=serializers.FileField(), write_only=True
     )
-    extra_media = serializers.SerializerMethodField(read_only=True)
+    extra_media = PropertyMediaSerializer(many=True, read_only=True)
 
     class Meta:
         model = PropertyModel
@@ -50,10 +51,6 @@ class PropertySerializer(serializers.ModelSerializer):
             "extra_media",
             "extra_media_upload",
         ]
-
-    def get_extra_media(self, obj):
-        extra_media_objects = obj.extra_media.only("media")
-        return [media.media.url for media in extra_media_objects]
 
     def update(self, instance, validated_data):
         extra_media = validated_data.pop("extra_media_upload", [])
