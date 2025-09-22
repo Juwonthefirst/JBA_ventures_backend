@@ -23,6 +23,9 @@ class Property(models.Model):
     price = models.IntegerField()
     tags = models.JSONField(default=dict)
 
+    class Meta:
+        ordering = ["-id"]
+
 
 class PropertyMedia(models.Model):
     property = models.ForeignKey(
