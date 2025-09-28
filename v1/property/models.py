@@ -4,7 +4,7 @@ from django.contrib.postgres.fields import ArrayField
 
 def create_image_path(instance, filename):
     extension = filename.split(".")[-1]
-    return f"{instance.pk}/base_image.{extension}"
+    return f"{instance.state}/{instance.lga}/{instance.address}/{instance.type}/base_image.{extension}"
 
 
 def create_extra_media_path(instance, filename):
