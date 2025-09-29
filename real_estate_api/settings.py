@@ -225,5 +225,5 @@ if os.getenv("MODE") != "development":
     )
 
     ALLOWED_HOSTS = [
-        "https://" + os.getenv("HOST_NAME"),
+        os.getenv("HOST_NAME"),
     ]
