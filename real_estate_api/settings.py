@@ -185,7 +185,7 @@ if os.getenv("MODE") != "development":
     STORAGES = {
         "default": {"BACKEND": "storages.backends.s3boto3.S3Boto3Storage"},
         "staticfiles": {
-            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
         },
     }
     AWS_ACCESS_KEY_ID = os.getenv("STORAGE_ACCESS_KEY")
@@ -205,8 +205,6 @@ if os.getenv("MODE") != "development":
     CSRF_COOKIE_SAMESITE = "None"
     SESSION_COOKIE_SAMESITE = "None"
 
-    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
     DEBUG = False
 
     MIDDLEWARE.append("whitenoise.middleware.WhiteNoiseMiddleware")
@@ -225,3 +223,7 @@ if os.getenv("MODE") != "development":
             "https://" + os.getenv("HOST_NAME"),
         ]
     )
+
+    ALLOWED_HOSTS = [
+        "https://" + os.getenv("HOST_NAME"),
+    ]
