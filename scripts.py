@@ -6,6 +6,13 @@ def run_development_server():
     subprocess.run(["uv", "run", "manage.py", "runserver", "0.0.0.0:8000"])
 
 
+def run_production_server():
+    subprocess.run(["python", "manage.py", "makemigrations"])
+    subprocess.run(["python", "manage.py", "migrate"])
+    subprocess.run(["python", "manage.py", "collectstatic"])
+    subprocess.run(["gunicorn", "real_estate_api.wsgi:application"])
+
+
 def make_migrations_and_migrate():
     subprocess.run(["uv", "run", "manage.py", "makemigrations"])
     subprocess.run(["uv", "run", "manage.py", "migrate"])
@@ -24,6 +31,8 @@ if __name__ == "__main__":
         match (sys.argv[1]):
             case "dev":
                 run_development_server()
+            case "prod":
+                run_production_server()
             case "migrate":
                 make_migrations_and_migrate()
             case "startdb":
