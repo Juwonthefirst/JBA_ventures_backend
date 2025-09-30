@@ -20,7 +20,7 @@ class Property(models.Model):
     benefits = ArrayField(models.CharField(max_length=150), default=list)
     type = models.CharField(max_length=50)
     offer = models.CharField(max_length=50)
-    price = models.IntegerField()
+    price = models.BigIntegerField()
     tags = models.JSONField(default=dict)
 
     class Meta:
