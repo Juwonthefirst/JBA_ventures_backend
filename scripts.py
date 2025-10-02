@@ -7,6 +7,7 @@ def run_development_server():
 
 
 def run_production_server():
+    subprocess.run(["python", "createsuperuser.py"])
     subprocess.run(["python", "manage.py", "makemigrations"])
     subprocess.run(["python", "manage.py", "migrate"])
     subprocess.run(["python", "manage.py", "collectstatic"])
