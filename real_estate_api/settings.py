@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-nt*0k_i+o(mhiy2tqrg$a#z7*a(#)xhb72lma4bx8&u%xc1s8r"
+SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -180,8 +180,8 @@ CSRF_TRUSTED_ORIGINS = [
 
 if os.getenv("MODE") != "development":
     # Storage
-    # MEDIA_URL = None
-    # MEDIA_ROOT = None
+    MEDIA_URL = None
+    MEDIA_ROOT = None
     STORAGES = {
         "default": {"BACKEND": "storages.backends.s3boto3.S3Boto3Storage"},
         "staticfiles": {
@@ -205,7 +205,7 @@ if os.getenv("MODE") != "development":
     CSRF_COOKIE_SAMESITE = "None"
     SESSION_COOKIE_SAMESITE = "None"
 
-    # DEBUG = False
+    DEBUG = False
 
     MIDDLEWARE.append("whitenoise.middleware.WhiteNoiseMiddleware")
 
