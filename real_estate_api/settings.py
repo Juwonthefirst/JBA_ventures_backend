@@ -180,8 +180,8 @@ CSRF_TRUSTED_ORIGINS = [
 
 if os.getenv("MODE") != "development":
     # Storage
-    MEDIA_URL = None
-    MEDIA_ROOT = None
+    # MEDIA_URL = None
+    # MEDIA_ROOT = None
     STORAGES = {
         "default": {"BACKEND": "storages.backends.s3boto3.S3Boto3Storage"},
         "staticfiles": {
