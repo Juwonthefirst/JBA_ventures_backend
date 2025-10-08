@@ -31,10 +31,10 @@ def login(request):
     try:
         user = User.objects.get(email=email)
     except User.DoesNotExist:
-        return Response({"error": "Invalid email or password"}, status=unauthorized)
+        return Response({"detail": "Invalid email or password"}, status=unauthorized)
 
     if not user.check_password(password):
-        return Response({"error": "Invalid email or password"}, status=unauthorized)
+        return Response({"detail": "Invalid email or password"}, status=unauthorized)
     refresh_token = RefreshToken.for_user(user)
 
     response = Response({"access": str(refresh_token.access_token)})
