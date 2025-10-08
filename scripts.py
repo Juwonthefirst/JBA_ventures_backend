@@ -1,4 +1,7 @@
+from re import sub
 import subprocess, sys
+
+import test
 
 postgres_file_location = "C:\\Program Files\\PostgreSQL\\17\\data"
 
@@ -29,6 +32,10 @@ def stop_database():
     subprocess.run(["pg_ctl", "-D", postgres_file_location, "stop"])
 
 
+def run_tests():
+    subprocess.run(["uv", "run", "manage.py", "test", "v1"])
+
+
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         match (sys.argv[1]):
@@ -42,3 +49,5 @@ if __name__ == "__main__":
                 start_database()
             case "stopdb":
                 stop_database()
+            case "test":
+                run_tests()

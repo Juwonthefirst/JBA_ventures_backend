@@ -53,6 +53,7 @@ class PropertySerializer(serializers.ModelSerializer):
         ]
 
     def update(self, instance, validated_data):
+        print(validated_data)
         extra_media = validated_data.pop("extra_media_upload", [])
         for file in extra_media:
             PropertyMedia.objects.create(property=property, media=file)

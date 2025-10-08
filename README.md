@@ -349,12 +349,6 @@ class PropertyMedia:
     media: FileField
 ```
 
-## Permissions
-
-- GET requests are allowed for all users
-- POST, PUT, DELETE requests require admin privileges
-- File uploads are restricted to admins only
-
 ## Contributing
 
 1. Fork the repository
