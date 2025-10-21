@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
-import os
+import os, dj_database_url
 
 load_dotenv()
 
@@ -86,15 +86,10 @@ WSGI_APPLICATION = "real_estate_api.wsgi.application"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DBNAME"),
-        "USER": os.getenv("DBUSER"),
-        "PASSWORD": os.getenv("DBPASSWORD"),
-        "HOST": os.getenv("DBHOST"),
-        "PORT": os.getenv("DBPORT") or 5432,
-        "CONN_MAX_AGE": 300,
-    }
+    "default": dj_database_url.config(
+        default=os.getenv("DATABASE_URL"),
+        conn_max_age=600,
+    )
 }
 
 
@@ -189,6 +184,9 @@ if os.getenv("MODE") != "development":
             "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
         },
     }
+    DATABASES["default"]["OPTIONS"] = {
+        "sslmode": "require",
+    }
     AWS_ACCESS_KEY_ID = os.getenv("STORAGE_ACCESS_KEY")
     AWS_SECRET_ACCESS_KEY = os.getenv("STORAGE_SECRET_KEY")
     AWS_STORAGE_BUCKET_NAME = os.getenv("STORAGE_BUCKET_NAME")
@@ -211,19 +209,15 @@ if os.getenv("MODE") != "development":
     MIDDLEWARE.append("whitenoise.middleware.WhiteNoiseMiddleware")
 
     CORS_ALLOW_ALL_ORIGINS = False
-    CORS_ALLOWED_ORIGINS.extend(
-        [
-            "https://" + os.getenv("FRONTEND_HOST_NAME"),
-            "https://" + os.getenv("HOST_NAME"),
-        ]
-    )
+    CORS_ALLOWED_ORIGINS = [
+        "https://" + os.getenv("FRONTEND_HOST_NAME"),
+        "https://" + os.getenv("HOST_NAME"),
+    ]
 
-    CSRF_TRUSTED_ORIGINS.extend(
-        [
-            "https://" + os.getenv("FRONTEND_HOST_NAME"),
-            "https://" + os.getenv("HOST_NAME"),
-        ]
-    )
+    CSRF_TRUSTED_ORIGINS = [
+        "https://" + os.getenv("FRONTEND_HOST_NAME"),
+        "https://" + os.getenv("HOST_NAME"),
+    ]
 
     ALLOWED_HOSTS = [
         os.getenv("HOST_NAME"),
