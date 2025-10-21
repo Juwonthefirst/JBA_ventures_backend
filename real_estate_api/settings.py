@@ -87,7 +87,7 @@ WSGI_APPLICATION = "real_estate_api.wsgi.application"
 
 DATABASES = {
     "default": dj_database_url.config(
-        default=os.getenv("DATABASE_URL"),
+        default=os.getenv("DB_URL"),
         conn_max_age=600,
     )
 }
