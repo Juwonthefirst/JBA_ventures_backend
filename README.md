@@ -21,6 +21,7 @@ A Django REST Framework backend for a real estate management system that handles
 - Role-based access control (Admin/Read-only)
 - Media file organization by location hierarchy
 - UV for package management and scripting
+- Intelligent extra media updating system, uploading only new files and sending id of removed files
 
 ## Technology Stack
 
