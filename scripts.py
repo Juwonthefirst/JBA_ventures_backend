@@ -1,4 +1,3 @@
-from re import sub
 import subprocess, sys
 
 import test

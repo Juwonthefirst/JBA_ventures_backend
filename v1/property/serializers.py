@@ -1,4 +1,4 @@
-from os import read
+from django.http import QueryDict
 from rest_framework import serializers
 from v1.property.models import Property as PropertyModel, PropertyMedia
 
@@ -10,7 +10,9 @@ class PropertyMediaSerializer(serializers.ModelSerializer):
 
 
 class ListCreatePropertySerializer(serializers.ModelSerializer):
-    extra_media = serializers.ListField(child=serializers.FileField(), write_only=True)
+    extra_media = serializers.ListField(
+        child=serializers.FileField(), write_only=True, required=False
+    )
 
     class Meta:
         model = PropertyModel
@@ -31,8 +33,12 @@ class ListCreatePropertySerializer(serializers.ModelSerializer):
 
 class PropertySerializer(serializers.ModelSerializer):
     extra_media_upload = serializers.ListField(
-        child=serializers.FileField(), write_only=True
+        child=serializers.FileField(), write_only=True, required=False
     )
+    removed_media_id = serializers.ListField(
+        child=serializers.IntegerField(), write_only=True, required=False
+    )
+
     extra_media = PropertyMediaSerializer(many=True, read_only=True)
 
     class Meta:
@@ -50,13 +56,36 @@ class PropertySerializer(serializers.ModelSerializer):
             "tags",
             "extra_media",
             "extra_media_upload",
+            "removed_media_id",
         ]
 
+    def to_internal_value(self, data):
+        if isinstance(data, QueryDict):
+            data = data.copy()
+            extra_media_upload = []
+            benefits = []
+            removed_media_id = []
+
+            for key in data:
+                if key.startswith("extra_media_upload["):
+                    extra_media_upload.append(data.get(key))
+                elif key.startswith("benefits["):
+                    benefits.append(data.get(key))
+                elif key.startswith("removed_media_id["):
+                    removed_media_id.append(data.get(key))
+
+            data.setlist("extra_media_upload", extra_media_upload)
+            data.setlist("benefits", benefits)
+            data.setlist("removed_media_id", removed_media_id)
+        return super().to_internal_value(data)
+
     def update(self, instance, validated_data):
-        print(validated_data)
         extra_media = validated_data.pop("extra_media_upload", [])
+        removed_media_id = validated_data.pop("removed_media_id", [])
+        if removed_media_id:
+            PropertyMedia.objects.filter(id__in=removed_media_id).delete()
         for file in extra_media:
-            PropertyMedia.objects.create(property=property, media=file)
+            PropertyMedia.objects.create(property=instance, media=file)
         for key, value in validated_data.items():
             if hasattr(instance, key):
                 setattr(instance, key, value)

@@ -1,6 +1,4 @@
-from rest_framework.response import Response
 from rest_framework import generics
-from rest_framework.decorators import api_view
 from v1.property.models import Property
 from v1.property.serializers import PropertySerializer, ListCreatePropertySerializer
 from v1.property.permissions import IsAdminOrReadOnly
