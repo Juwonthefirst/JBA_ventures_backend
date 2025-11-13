@@ -67,7 +67,7 @@ def logout(request):
         return Response({"error": "invalid token"}, status=bad_request)
 
 
-class TokenRefreshView(TokenRefreshView):
+class CustomTokenRefreshView(TokenRefreshView):
     def post(self, request, *args, **kwargs):
         refresh_token = request.COOKIES.get("refresh_token")
         if not refresh_token:
