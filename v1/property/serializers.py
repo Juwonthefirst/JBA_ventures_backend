@@ -88,9 +88,13 @@ class PropertySerializer(serializers.ModelSerializer):
         if removed_media_id:
             PropertyMedia.objects.filter(id__in=removed_media_id).delete()
         for file in extra_media:
+            file = process_image(file)
             PropertyMedia.objects.create(property=instance, media=file)
         for key, value in validated_data.items():
-            if hasattr(instance, key):
+            if key == "main_image":
+                instance.main_image = process_image(value)
+
+            elif hasattr(instance, key):
                 setattr(instance, key, value)
         instance.save()
         return instance
