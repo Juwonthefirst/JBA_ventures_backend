@@ -1,6 +1,7 @@
 from django.http import QueryDict
 from rest_framework import serializers
 from v1.property.models import Property as PropertyModel, PropertyMedia
+from v1.property.utils import process_image
 
 
 class PropertyMediaSerializer(serializers.ModelSerializer):
@@ -25,8 +26,10 @@ class ListCreatePropertySerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         extra_media = validated_data.pop("extra_media", [])
-        property = PropertyModel.objects.create(**validated_data)
+        main_image = process_image(validated_data.pop("main_image"))
+        property = PropertyModel.objects.create(**validated_data, main_image=main_image)
         for file in extra_media:
+            file = process_image(file)
             PropertyMedia.objects.create(property=property, media=file)
         return property
 
