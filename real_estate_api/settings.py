@@ -204,7 +204,7 @@ if os.getenv("MODE") != "development":
     CSRF_COOKIE_SAMESITE = "None"
     SESSION_COOKIE_SAMESITE = "None"
 
-    DEBUG = False
+    DEBUG = True
 
     MIDDLEWARE.append("whitenoise.middleware.WhiteNoiseMiddleware")
 
