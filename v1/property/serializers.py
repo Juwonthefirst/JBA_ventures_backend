@@ -64,7 +64,7 @@ class PropertySerializer(serializers.ModelSerializer):
 
     def to_internal_value(self, data):
         if isinstance(data, QueryDict):
-            data = data.copy()
+            # data = data.copy()
             extra_media_upload = []
             benefits = []
             removed_media_id = []
