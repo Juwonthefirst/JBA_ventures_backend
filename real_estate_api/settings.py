@@ -176,8 +176,8 @@ CSRF_TRUSTED_ORIGINS = [
 
 if os.getenv("MODE") != "development":
     # Storage
-    # MEDIA_URL = None
-    # MEDIA_ROOT = None
+    MEDIA_URL = None
+    MEDIA_ROOT = None
     STORAGES = {
         "default": {"BACKEND": "storages.backends.s3boto3.S3Boto3Storage"},
         "staticfiles": {
@@ -204,7 +204,7 @@ if os.getenv("MODE") != "development":
     CSRF_COOKIE_SAMESITE = "None"
     SESSION_COOKIE_SAMESITE = "None"
 
-    # DEBUG = False
+    DEBUG = False
 
     MIDDLEWARE.append("whitenoise.middleware.WhiteNoiseMiddleware")
 
